@@ -1,5 +1,5 @@
 ﻿using System;
-namespace User.Config
+namespace Common.Settings
 {
     public class DatabaseSettings
     {

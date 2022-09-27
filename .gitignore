@@ -3,3 +3,9 @@ src/Services/User/obj
 src/.vs
 src/.DS_Store
 .DS_Store
+src/Basket/bin
+src/Basket/obj
+src/Catalog/bin
+src/Catalog/obj
+src/Common/bin
+src/Common/obj
