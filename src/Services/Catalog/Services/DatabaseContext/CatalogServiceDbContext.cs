@@ -1,21 +1,19 @@
 ﻿using System;
+using Common.Settings;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-using User.User.Entity;
 
-namespace User.Services.DatabaseContext
+namespace Catalog.Services.DatabaseContext
 {
-    using Common.Settings;
-    using User.Entity;
-
-    public class UserServiceDbContext : DbContext
+    using Catalog.Product.Entity;
+    public class CatalogServiceDbContext : DbContext
     {
         private readonly IOptions<DatabaseSettings> _options;
-        private readonly ILogger<UserServiceDbContext> _logger;
+        private readonly ILogger<CatalogServiceDbContext> _logger;
 
-        DbSet<User> Users => Set<User>();
+        DbSet<Product> Users => Set<Product>();
 
-        public UserServiceDbContext(IOptions<DatabaseSettings> options, ILogger<UserServiceDbContext> logger)
+        public CatalogServiceDbContext(IOptions<DatabaseSettings> options, ILogger<CatalogServiceDbContext> logger)
         {
             _options = options;
             _logger = logger;

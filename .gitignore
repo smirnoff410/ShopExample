@@ -9,3 +9,9 @@ src/Catalog/bin
 src/Catalog/obj
 src/Common/bin
 src/Common/obj
+src/Services/Basket/bin
+src/Services/Basket/obj
+src/Services/Catalog/bin
+src/Services/Catalog/obj
+src/Services/Common/bin
+src/Services/Common/obj
