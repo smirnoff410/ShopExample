@@ -13,7 +13,7 @@ namespace User.Services.DatabaseContext
         private readonly IOptions<DatabaseSettings> _options;
         private readonly ILogger<UserServiceDbContext> _logger;
 
-        DbSet<User> Users => Set<User>();
+        public DbSet<User> Users => Set<User>();
 
         public UserServiceDbContext(IOptions<DatabaseSettings> options, ILogger<UserServiceDbContext> logger)
         {

@@ -21,10 +21,16 @@
   <ItemGroup>
     <None Remove="Microsoft.EntityFrameworkCore.Tools" />
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
+    <None Remove="User\Controller\" />
+    <None Remove="User\DTO\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="User\Controller\" />
+    <Folder Include="User\DTO\" />
   </ItemGroup>
 </Project>
