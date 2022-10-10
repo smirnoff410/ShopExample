@@ -23,6 +23,7 @@
     <None Remove="Microsoft.EntityFrameworkCore.Design" />
     <None Remove="User\Controller\" />
     <None Remove="User\DTO\" />
+    <None Remove="User\Validation\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Common\Common.csproj">
@@ -32,5 +33,6 @@
   <ItemGroup>
     <Folder Include="User\Controller\" />
     <Folder Include="User\DTO\" />
+    <Folder Include="User\Validation\" />
   </ItemGroup>
 </Project>

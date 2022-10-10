@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Services.Validation;
 using Microsoft.AspNetCore.Mvc;
 using User.Services.DatabaseContext;
 using User.User.DTO;
@@ -14,11 +15,19 @@ namespace User.User.Controller
     public class UserController : Microsoft.AspNetCore.Mvc.Controller
     {
         private readonly UserServiceDbContext _context;
+        private readonly IValidator<CreateUserDTO> _createValidator;
+        private readonly IValidator<UpdateUserDTO> _updateValidator;
 
-        public UserController(UserServiceDbContext context)
+        public UserController(
+            UserServiceDbContext context,
+            IValidator<CreateUserDTO> createValidator,
+            IValidator<UpdateUserDTO> updateValidator)
         {
             _context = context;
+            _createValidator = createValidator;
+            _updateValidator = updateValidator;
         }
+
         // GET: api/values
         [HttpGet]
         public IActionResult Get()
@@ -37,6 +46,10 @@ namespace User.User.Controller
         [HttpPost]
         public IActionResult Post([FromBody] CreateUserDTO dto)
         {
+            var validator = _createValidator.Validate(dto);
+            if (!validator.Result)
+                return new BadRequestObjectResult(validator.ErrorMessage);
+
             var user = new User.Entity.User
             {
                 Name = dto.Name,
@@ -53,6 +66,10 @@ namespace User.User.Controller
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateUserDTO dto)
         {
+            var validator = _updateValidator.Validate(dto);
+            if (!validator.Result)
+                return new BadRequestObjectResult(validator.ErrorMessage);
+
             var user = _context.Users.Find(id);
 
             user.Name = dto.Name;
