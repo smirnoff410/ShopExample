@@ -62,3 +62,58 @@ consumer.Received += (model, ea) =>
 };
 channel.BasicConsume(queue: "your_queue_name", autoAck: true, consumer: consumer);
 ```
+
+## Docker
+
+Для удобного разворачивания обернем наши сервисы в docker контейнеры в связке с docker-compose
+#### Структура докер файла для приложения .NET
+- Указать образ используемого .NET sdk
+- Копирование файлов проектов(.csproj) и решения (.sln) в папку контейнера
+- Обновить зависомсти NuGet с помощью команды restore
+- Копирование всех необходимых файлов приложения в папку контейнера
+- Компилирование приложения с помощью команды publish
+- Запуск файла dll приложения
+
+Для сервиса User данного приложения был сформирован следующий docker файл
+```
+FROM mcr.microsoft.com/dotnet/sdk:6.0 AS build-env
+WORKDIR /app
+
+COPY "ShopExample.sln" "ShopExample.sln"
+COPY "Common/Common.csproj" "Common/Common.csproj"
+COPY "Services/Catalog/Catalog.csproj" "Services/Catalog/Catalog.csproj"
+COPY "Services/Basket/Basket.csproj" "Services/Basket/Basket.csproj"
+COPY "Services/User/User.csproj" "Services/User/User.csproj"
+
+RUN dotnet restore ShopExample.sln
+
+COPY "./Common" "./Common"
+COPY "./Services/Catalog" "./Services/Catalog"
+COPY "./Services/Basket" "./Services/Basket"
+COPY "./Services/User" "./Services/User"
+
+RUN dotnet publish --no-restore -c Release -o out
+
+FROM mcr.microsoft.com/dotnet/aspnet:6.0
+WORKDIR /app
+COPY --from=build-env /app/out .
+ENTRYPOINT ["dotnet", "User.dll"]
+```
+
+#### docker-compose
+Для удобного запуска сразу нескольких docker контейнеров воспользуемся утилитой docker-compose. Она использует язык разметки yaml.
+Для сервиса нам необходимо указать `hostname`, `container_name`, `dockerfile`, `ports`
+```
+user:
+    hostname: shop_example_user
+    container_name: shop_example_user
+    build:
+        context: .
+        dockerfile: UserDockerfile
+    ports:
+        - "5003:80"
+```
+
+Для запуска контейнеров необходимо открыть консоль в папке с файлом docker-compose.yml и выполнить следующую команду:
+`docker-compose up -d`
+После этого сервис должен быть доступен по пути `http://localhost:5003`
