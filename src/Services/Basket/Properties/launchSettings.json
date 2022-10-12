@@ -3,8 +3,8 @@
   "profiles": {
     "Basket": {
       "commandName": "Project",
-      "launchBrowser": true,
-      "applicationUrl": "http://localhost:13839",
+      "launchBrowser": false,
+      "applicationUrl": "http://localhost:5002",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
       }

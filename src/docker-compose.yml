@@ -1,0 +1,26 @@
+version: "3.9"
+services:
+    catalog:
+        hostname: shop_example_catalog
+        container_name: shop_example_catalog
+        build:
+            context: .
+            dockerfile: CatalogDockerfile
+        ports:
+            - "5001:80"
+    basket:
+        hostname: shop_example_basket
+        container_name: shop_example_basket
+        build:
+            context: .
+            dockerfile: BasketDockerfile
+        ports:
+            - "5002:80"
+    user:
+        hostname: shop_example_user
+        container_name: shop_example_user
+        build:
+            context: .
+            dockerfile: UserDockerfile
+        ports:
+            - "5003:80"

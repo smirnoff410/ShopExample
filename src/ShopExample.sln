@@ -9,7 +9,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalog", "Services\Catalog
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Basket", "Services\Basket\Basket.csproj", "{D022F54D-CFC7-4776-BDA7-4E61FD3409A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Services\Common\Common.csproj", "{0E385EFD-E1C3-43F0-8C27-1D477913B5B1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Common", "Common\Common.csproj", "{28154C67-8920-4373-9CC0-EA4473F9827E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -29,10 +29,10 @@ Global
 		{D022F54D-CFC7-4776-BDA7-4E61FD3409A3}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{D022F54D-CFC7-4776-BDA7-4E61FD3409A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{D022F54D-CFC7-4776-BDA7-4E61FD3409A3}.Release|Any CPU.Build.0 = Release|Any CPU
-		{0E385EFD-E1C3-43F0-8C27-1D477913B5B1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0E385EFD-E1C3-43F0-8C27-1D477913B5B1}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0E385EFD-E1C3-43F0-8C27-1D477913B5B1}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0E385EFD-E1C3-43F0-8C27-1D477913B5B1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{28154C67-8920-4373-9CC0-EA4473F9827E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{28154C67-8920-4373-9CC0-EA4473F9827E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{28154C67-8920-4373-9CC0-EA4473F9827E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{28154C67-8920-4373-9CC0-EA4473F9827E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
