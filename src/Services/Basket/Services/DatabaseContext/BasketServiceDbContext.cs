@@ -12,7 +12,8 @@ namespace Basket.Services.DatabaseContext
         private readonly IOptions<DatabaseSettings> _options;
         private readonly ILogger<BasketServiceDbContext> _logger;
 
-        DbSet<Basket> Users => Set<Basket>();
+        public DbSet<Basket> Baskets => Set<Basket>();
+        public DbSet<User> Users => Set<User>();
 
         public BasketServiceDbContext(IOptions<DatabaseSettings> options, ILogger<BasketServiceDbContext> logger)
         {

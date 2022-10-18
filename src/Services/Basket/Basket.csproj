@@ -24,4 +24,10 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="User\Integration\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="User\Integration\" />
+  </ItemGroup>
 </Project>
