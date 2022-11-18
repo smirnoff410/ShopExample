@@ -24,3 +24,22 @@ services:
             dockerfile: UserDockerfile
         ports:
             - "5003:80"
+    postgres:
+        image: postgres
+        container_name: shop_example_postgres
+        environment:
+            POSTGRES_DB: "postgres"
+            POSTGRES_USER: "postgres"
+            POSTGRES_PASSWORD: "12345"
+        ports:
+            - "5432:5432"
+    rabbitmq:
+        image: rabbitmq:3-management-alpine
+        container_name: shop_example_rabbit
+        ports:
+            - "5672:5672"
+            - "15672:15672"
+        environment:
+            RABBITMQ_DEFAULT_USER: "admin"
+            RABBITMQ_DEFAULT_PASS: "123"
+            RABBITMQ_DEFAULT_VHOST: "shop"

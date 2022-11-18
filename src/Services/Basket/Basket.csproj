@@ -6,6 +6,7 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' " />
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
@@ -26,8 +27,14 @@
   </ItemGroup>
   <ItemGroup>
     <None Remove="User\Integration\" />
+    <None Remove="Basket\Controller\" />
+    <None Remove="Basket\DTO\" />
+    <None Remove="Product\Integration\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="User\Integration\" />
+    <Folder Include="Basket\Controller\" />
+    <Folder Include="Basket\DTO\" />
+    <Folder Include="Product\Integration\" />
   </ItemGroup>
 </Project>

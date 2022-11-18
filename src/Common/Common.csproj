@@ -18,6 +18,8 @@
     <None Remove="Models\" />
     <None Remove="Models\User\" />
     <None Remove="Services\Command\" />
+    <None Remove="Converters\" />
+    <None Remove="Models\Product\" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Middlewares\" />
@@ -25,5 +27,7 @@
     <Folder Include="Models\" />
     <Folder Include="Models\User\" />
     <Folder Include="Services\Command\" />
+    <Folder Include="Converters\" />
+    <Folder Include="Models\Product\" />
   </ItemGroup>
 </Project>

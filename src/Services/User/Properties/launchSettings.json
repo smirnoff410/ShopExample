@@ -3,10 +3,16 @@
   "profiles": {
     "User": {
       "commandName": "Project",
-      "launchBrowser": false,
       "applicationUrl": "http://localhost:5003",
       "environmentVariables": {
         "ASPNETCORE_ENVIRONMENT": "Development"
+      }
+    },
+    "Production": {
+      "commandName": "Project",
+      "applicationUrl": "http://localhost:5003",
+      "environmentVariables": {
+        "ASPNETCORE_ENVIRONMENT": "Production"
       }
     }
   }

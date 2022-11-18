@@ -1,11 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using Common.Models.User;
+using Common.Services.Command;
+using Common.Services.MessageQueue;
 using Common.Services.Validation;
 using Microsoft.AspNetCore.Mvc;
 using User.Services.DatabaseContext;
+using User.User.Command;
 using User.User.DTO;
+using User.User.Validation;
 
 // For more information on enabling Web API for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -14,79 +20,90 @@ namespace User.User.Controller
     [Route("api/[controller]")]
     public class UserController : Microsoft.AspNetCore.Mvc.Controller
     {
+        private readonly IServiceProvider _serviceProvider;
         private readonly UserServiceDbContext _context;
-        private readonly IValidator<CreateUserDTO> _createValidator;
-        private readonly IValidator<UpdateUserDTO> _updateValidator;
 
         public UserController(
-            UserServiceDbContext context,
-            IValidator<CreateUserDTO> createValidator,
-            IValidator<UpdateUserDTO> updateValidator)
+            IServiceProvider serviceProvider,
+            UserServiceDbContext context)
         {
+            _serviceProvider = serviceProvider;
             _context = context;
-            _createValidator = createValidator;
-            _updateValidator = updateValidator;
         }
 
-        // GET: api/values
+        // GET: api/user
         [HttpGet]
         public IActionResult Get()
         {
-            return new OkObjectResult(_context.Users.ToList());
+            var users = _context.Users.Select(x => new ViewUserDTO
+            {
+                Id = x.Id,
+                Name = x.Name,
+                Birthday = x.Birthday
+            }).ToList();
+            return new OkObjectResult(users);
         }
 
-        // GET api/values/5
+        // GET api/product/5
         [HttpGet("{id}")]
         public IActionResult Get(int id)
         {
-            return new OkObjectResult(_context.Users.Find(id));
+            var user = _context.Users.Find(id);
+            var dto = new ViewUserDTO
+            {
+                Id = user.Id,
+                Name = user.Name,
+                Birthday = user.Birthday
+            };
+            return new OkObjectResult(dto);
         }
 
-        // POST api/values
+        // POST api/product
         [HttpPost]
         public IActionResult Post([FromBody] CreateUserDTO dto)
         {
-            var validator = _createValidator.Validate(dto);
-            if (!validator.Result)
-                return new BadRequestObjectResult(validator.ErrorMessage);
-
-            var user = new User.Entity.User
+            //Паттерн: Фабричный метод
+            var validator = new CreateUserDTOValidator();
+            var validationResult = validator.Validate(dto);
+            if (!validationResult.Result)
             {
-                Name = dto.Name,
-                Birthday = dto.Birthday
-            };
+                return new BadRequestObjectResult(validationResult.ErrorMessage);
+            }
+            //Паттерн: Команда
+            var mainCommand = new CreateUserCommand(_serviceProvider, dto);
+            var integrationCommand = new CreateUserIntegrationCommand(_serviceProvider);
 
-            _context.Users.Add(user);
-            _context.SaveChanges();
+            var invoker = new CommandInvoker(mainCommand, integrationCommand);
+            var response = invoker.Invoke();
 
-            return new OkObjectResult(user.Id);
+            return response;
         }
 
-        // PUT api/values/5
+        // PUT api/product/5
         [HttpPut("{id}")]
         public IActionResult Put(int id, [FromBody] UpdateUserDTO dto)
         {
-            var validator = _updateValidator.Validate(dto);
-            if (!validator.Result)
-                return new BadRequestObjectResult(validator.ErrorMessage);
+            var validator = new UpdateUserDTOValidator();
+            var validationResult = validator.Validate(dto);
+            if (!validationResult.Result)
+            {
+                return new BadRequestObjectResult(validationResult.ErrorMessage);
+            }
+            var mainCommand = new UpdateUserCommand(_serviceProvider, dto, id);
 
-            var user = _context.Users.Find(id);
+            var invoker = new CommandInvoker(mainCommand);
+            var response = invoker.Invoke();
 
-            user.Name = dto.Name;
-
-            _context.SaveChanges();
-
-            return new OkObjectResult(user.Id);
+            return response;
         }
 
-        // DELETE api/values/5
+        // DELETE api/product/5
         [HttpDelete("{id}")]
         public void Delete(int id)
         {
-            var user = _context.Users.Find(id);
-
-            _context.Users.Remove(user);
-            _context.SaveChanges();
+            var command = new DeleteUserCommand(_serviceProvider, id);
+            var invoker = new CommandInvoker(command);
+            invoker.Invoke();
         }
     }
 }

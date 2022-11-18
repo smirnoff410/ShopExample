@@ -6,30 +6,29 @@ using Common.Services.Command;
 namespace Basket.User.Integration
 {
     using User.Entity;
-    public class CreateUserIntegration : Command<UserIntegrationMessage, bool>
+    public class CreateUserIntegration : Command
     {
-        private readonly IServiceScope _scope;
+        private readonly BasketServiceDbContext _context;
+        private readonly UserIntegrationMessage _message;
 
-        public CreateUserIntegration(IServiceScope scope, ILogger<CreateUserIntegration> logger)
-            : base(logger)
+        public CreateUserIntegration(IServiceScope scope, UserIntegrationMessage data)
         {
-            _scope = scope;
+            _context = scope.ServiceProvider.GetRequiredService<BasketServiceDbContext>();
+            _message = data;
         }
 
-        public override bool Execute(UserIntegrationMessage data)
+        public override CommandResponse Execute()
         {
-            var db = _scope.ServiceProvider.GetRequiredService<BasketServiceDbContext>();
-
             var user = new User
             {
-                Id = data.Id,
-                Birthday = data.Birthday
+                Id = _message.Id,
+                Birthday = _message.Birthday
             };
 
-            db.Users.Add(user);
-            db.SaveChanges();
+            _context.Users.Add(user);
+            _context.SaveChanges();
 
-            return true;
+            return new CommandResponse { Success = true };
         }
     }
 }

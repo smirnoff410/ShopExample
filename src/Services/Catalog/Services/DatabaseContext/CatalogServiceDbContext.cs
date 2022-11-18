@@ -11,7 +11,7 @@ namespace Catalog.Services.DatabaseContext
         private readonly IOptions<DatabaseSettings> _options;
         private readonly ILogger<CatalogServiceDbContext> _logger;
 
-        DbSet<Product> Users => Set<Product>();
+        public DbSet<Product> Products => Set<Product>();
 
         public CatalogServiceDbContext(IOptions<DatabaseSettings> options, ILogger<CatalogServiceDbContext> logger)
         {

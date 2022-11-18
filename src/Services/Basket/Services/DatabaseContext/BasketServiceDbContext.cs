@@ -7,6 +7,7 @@ namespace Basket.Services.DatabaseContext
 {
     using Basket.Entity;
     using User.Entity;
+    using Product.Entity;
     public class BasketServiceDbContext : DbContext
     {
         private readonly IOptions<DatabaseSettings> _options;
@@ -14,6 +15,7 @@ namespace Basket.Services.DatabaseContext
 
         public DbSet<Basket> Baskets => Set<Basket>();
         public DbSet<User> Users => Set<User>();
+        public DbSet<Product> Products => Set<Product>();
 
         public BasketServiceDbContext(IOptions<DatabaseSettings> options, ILogger<BasketServiceDbContext> logger)
         {
@@ -41,6 +43,12 @@ namespace Basket.Services.DatabaseContext
                 .Entity<Basket>()
                 .HasMany(x => x.Products)
                 .WithMany(x => x.Baskets)
+                .UsingEntity(x => x.ToTable("BasketProduct"));
+
+            modelBuilder
+                .Entity<Product>()
+                .HasMany(x => x.Baskets)
+                .WithMany(x => x.Products)
                 .UsingEntity(x => x.ToTable("BasketProduct"));
         }
     }

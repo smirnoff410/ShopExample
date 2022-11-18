@@ -10,6 +10,7 @@ namespace Common.Configure
         public static void ConfigureSettings(this IServiceCollection services, ConfigurationManager configuration)
         {
             services.Configure<DatabaseSettings>(configuration.GetSection(DatabaseSettings.SectionName));
+            services.Configure<RabbitMqSettings>(configuration.GetSection(RabbitMqSettings.SectionName));
         }
     }
 }

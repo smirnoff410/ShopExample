@@ -6,6 +6,10 @@
     <ImplicitUsings>enable</ImplicitUsings>
   </PropertyGroup>
 
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(RunConfiguration)' == 'Production' " />
   <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.10" />
     <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" Version="6.0.7" />
@@ -24,6 +28,7 @@
     <None Remove="User\Controller\" />
     <None Remove="User\DTO\" />
     <None Remove="User\Validation\" />
+    <None Remove="User\Command\" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">
@@ -34,5 +39,6 @@
     <Folder Include="User\Controller\" />
     <Folder Include="User\DTO\" />
     <Folder Include="User\Validation\" />
+    <Folder Include="User\Command\" />
   </ItemGroup>
 </Project>

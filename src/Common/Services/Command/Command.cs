@@ -3,16 +3,14 @@ using Microsoft.Extensions.Logging;
 
 namespace Common.Services.Command
 {
-    public abstract class Command<TRequest, TResponse>
+    public abstract class Command : ICommand
     {
-        protected readonly ILogger<Command<TRequest, TResponse>> _logger;
+        public abstract CommandResponse Execute();
 
-        public Command(ILogger<Command<TRequest, TResponse>> logger)
+        public virtual void SetData(object data)
         {
-            _logger = logger;
-        }
 
-        public abstract TResponse Execute(TRequest data);
+        }
     }
 }
 
