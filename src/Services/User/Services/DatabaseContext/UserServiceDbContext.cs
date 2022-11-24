@@ -15,9 +15,9 @@ namespace User.Services.DatabaseContext
 
         public DbSet<User> Users => Set<User>();
 
-        public UserServiceDbContext(IOptions<DatabaseSettings> options, ILogger<UserServiceDbContext> logger)
+        public UserServiceDbContext(IOptions<DatabaseSettings> settings, ILogger<UserServiceDbContext> logger, DbContextOptions<UserServiceDbContext> options) : base(options)
         {
-            _options = options;
+            _options = settings;
             _logger = logger;
 
             Database.EnsureCreated();
@@ -25,8 +25,11 @@ namespace User.Services.DatabaseContext
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseNpgsql(_options.Value.ConnectionString);
-            _logger.LogInformation($"Connect to database: {_options.Value.ConnectionString}");
+            if (!optionsBuilder.IsConfigured)
+            {
+                optionsBuilder.UseNpgsql(_options.Value.ConnectionString).LogTo(Console.WriteLine, LogLevel.Information);
+                _logger.LogInformation($"Connect to database: {_options.Value.ConnectionString}");
+            }
         }
     }
 }

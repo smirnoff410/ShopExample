@@ -5,12 +5,13 @@ using Common.Services.MessageQueue;
 
 namespace User.User.Command
 {
+    using global::User.User.DTO;
     using User.Entity;
     public class CreateUserIntegrationCommand : Common.Services.Command.Command
     {
         private readonly IMessageQueue _messageQueue;
 
-        private User _dto;
+        private ViewUserDTO _dto;
 
         public CreateUserIntegrationCommand(IServiceProvider provider)
         {
@@ -29,7 +30,7 @@ namespace User.User.Command
 
         public override void SetData(object data)
         {
-            _dto = (User)data;
+            _dto = (ViewUserDTO)data;
         }
     }
 }

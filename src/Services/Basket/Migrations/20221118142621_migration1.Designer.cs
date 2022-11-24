@@ -12,14 +12,14 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace Basket.Migrations
 {
     [DbContext(typeof(BasketServiceDbContext))]
-    [Migration("20220929145513_migration_1")]
-    partial class migration_1
+    [Migration("20221118142621_migration1")]
+    partial class migration1
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "6.0.9")
+                .HasAnnotation("ProductVersion", "6.0.10")
                 .HasAnnotation("Relational:MaxIdentifierLength", 63);
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
@@ -40,7 +40,7 @@ namespace Basket.Migrations
                     b.HasIndex("UserId")
                         .IsUnique();
 
-                    b.ToTable("Users");
+                    b.ToTable("Baskets");
                 });
 
             modelBuilder.Entity("Basket.Product.Entity.Product", b =>
@@ -51,6 +51,9 @@ namespace Basket.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("Id"));
 
+                    b.Property<int>("Count")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Name")
                         .IsRequired()
                         .HasColumnType("text");
@@ -60,7 +63,7 @@ namespace Basket.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Product");
+                    b.ToTable("Products");
                 });
 
             modelBuilder.Entity("Basket.User.Entity.User", b =>
@@ -76,7 +79,7 @@ namespace Basket.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("User");
+                    b.ToTable("Users");
                 });
 
             modelBuilder.Entity("BasketProduct", b =>

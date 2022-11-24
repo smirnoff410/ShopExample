@@ -12,12 +12,15 @@ COPY "Services/Basket/Basket.csproj" "Services/Basket/Basket.csproj"
 
 COPY "Services/User/User.csproj" "Services/User/User.csproj"
 
+COPY "Gateway/Gateway.csproj" "Gateway/Gateway.csproj"
+
 RUN dotnet restore ShopExample.sln
 
 COPY "./Common" "./Common"
 COPY "./Services/Catalog" "./Services/Catalog"
 COPY "./Services/Basket" "./Services/Basket"
 COPY "./Services/User" "./Services/User"
+COPY "./Gateway" "./Gateway"
 
 RUN dotnet publish --no-restore -c Release -o out
 

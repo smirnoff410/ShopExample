@@ -31,7 +31,7 @@ namespace User.User.Command
             _context.Users.Add(user);
             _context.SaveChanges();
 
-            return new CommandResponse { Success = true, Response = user };
+            return new CommandResponse { Success = true, Response = new ViewUserDTO { Id = user.Id, Name = user.Name, Birthday = user.Birthday } };
         }
     }
 }

@@ -15,3 +15,7 @@ src/Services/Catalog/bin
 src/Services/Catalog/obj
 src/Services/Common/bin
 src/Services/Common/obj
+src/Gateway/bin
+src/Gateway/obj
+src/UnitTests/bin
+src/UnitTests/obj

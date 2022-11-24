@@ -6,26 +6,12 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace Basket.Migrations
 {
-    public partial class migration_1 : Migration
+    public partial class migration1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Product",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "integer", nullable: false)
-                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Name = table.Column<string>(type: "text", nullable: false),
-                    Price = table.Column<int>(type: "integer", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Product", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "User",
+                name: "Users",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -34,11 +20,11 @@ namespace Basket.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_User", x => x.Id);
+                    table.PrimaryKey("PK_Users", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
-                name: "Users",
+                name: "Baskets",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
@@ -47,11 +33,11 @@ namespace Basket.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Users", x => x.Id);
+                    table.PrimaryKey("PK_Baskets", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Users_User_UserId",
+                        name: "FK_Baskets_Users_UserId",
                         column: x => x.UserId,
-                        principalTable: "User",
+                        principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -67,15 +53,15 @@ namespace Basket.Migrations
                 {
                     table.PrimaryKey("PK_BasketProduct", x => new { x.BasketsId, x.ProductsId });
                     table.ForeignKey(
-                        name: "FK_BasketProduct_Product_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Product",
+                        name: "FK_BasketProduct_Baskets_BasketsId",
+                        column: x => x.BasketsId,
+                        principalTable: "Baskets",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
-                        name: "FK_BasketProduct_Users_BasketsId",
-                        column: x => x.BasketsId,
-                        principalTable: "Users",
+                        name: "FK_BasketProduct_Products_ProductsId",
+                        column: x => x.ProductsId,
+                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -86,8 +72,8 @@ namespace Basket.Migrations
                 column: "ProductsId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Users_UserId",
-                table: "Users",
+                name: "IX_Baskets_UserId",
+                table: "Baskets",
                 column: "UserId",
                 unique: true);
         }
@@ -98,13 +84,13 @@ namespace Basket.Migrations
                 name: "BasketProduct");
 
             migrationBuilder.DropTable(
-                name: "Product");
+                name: "Baskets");
+
+            migrationBuilder.DropTable(
+                name: "Products");
 
             migrationBuilder.DropTable(
                 name: "Users");
-
-            migrationBuilder.DropTable(
-                name: "User");
         }
     }
 }

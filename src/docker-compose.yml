@@ -1,5 +1,13 @@
 version: "3.9"
 services:
+    gateway:
+        hostname: shop_example_gateway
+        container_name: shop_example_gateway
+        build:
+            context: .
+            dockerfile: GatewayDockerfile
+        ports:
+            - "5000:80"
     catalog:
         hostname: shop_example_catalog
         container_name: shop_example_catalog
