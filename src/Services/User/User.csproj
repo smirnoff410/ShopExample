@@ -23,22 +23,8 @@
     </PackageReference>
   </ItemGroup>
   <ItemGroup>
-    <None Remove="Microsoft.EntityFrameworkCore.Tools" />
-    <None Remove="Microsoft.EntityFrameworkCore.Design" />
-    <None Remove="User\Controller\" />
-    <None Remove="User\DTO\" />
-    <None Remove="User\Validation\" />
-    <None Remove="User\Command\" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\..\Common\Common.csproj">
       <GlobalPropertiesToRemove></GlobalPropertiesToRemove>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="User\Controller\" />
-    <Folder Include="User\DTO\" />
-    <Folder Include="User\Validation\" />
-    <Folder Include="User\Command\" />
   </ItemGroup>
 </Project>

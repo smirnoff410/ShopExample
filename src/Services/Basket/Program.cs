@@ -1,14 +1,17 @@
-﻿using Basket.Product.Integration;
+﻿using System.Reflection;
+using Basket.Product.Integration;
 using Basket.Services.DatabaseContext;
 using Basket.User.Integration;
 using Common.Configure;
 using Common.Models.Product;
 using Common.Models.User;
 using Common.Services.MessageQueue;
+using Common.Settings;
 
 var builder = WebApplication.CreateBuilder(args);
 
 builder.Services.ConfigureSettings(builder.Configuration);
+
 builder.Services.AddDbContext<BasketServiceDbContext>();
 builder.Services.AddSingleton<IMessageQueue, RabbitMessageQueue>();
 builder.Services.AddControllers();

@@ -1,8 +1,10 @@
-﻿using Common.Configure;
+﻿using System.Reflection;
+using Common.Configure;
 using Common.Middlewares;
 using Common.Services.MessageQueue;
 using Common.Services.Validation;
 using Common.Settings;
+using Microsoft.Extensions.Configuration;
 using User.Services.DatabaseContext;
 using User.User.DTO;
 using User.User.Validation;
