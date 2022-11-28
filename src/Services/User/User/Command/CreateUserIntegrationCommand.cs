@@ -7,7 +7,7 @@ namespace User.User.Command
 {
     using global::User.User.DTO;
     using User.Entity;
-    public class CreateUserIntegrationCommand : Common.Services.Command.Command
+    public class CreateUserIntegrationCommand : Common.Services.Command.CommandIntegrate
     {
         private readonly IMessageQueue _messageQueue;
 

@@ -6,7 +6,7 @@ using Common.Services.MessageQueue;
 
 namespace Catalog.Product.Command
 {
-    public class CreateProductIntegrationCommand : Common.Services.Command.Command
+    public class CreateProductIntegrationCommand : Common.Services.Command.CommandIntegrate
     {
 
         private readonly IMessageQueue _messageQueue;

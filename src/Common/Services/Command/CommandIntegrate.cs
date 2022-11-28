@@ -1,11 +1,11 @@
 ﻿using System;
-using Microsoft.Extensions.Logging;
-
 namespace Common.Services.Command
 {
-    public abstract class Command : ICommand
+    public abstract class CommandIntegrate : ICommandIntegrate
     {
         public abstract CommandResponse Execute();
+
+        public abstract void SetData(object data);
     }
 }
 

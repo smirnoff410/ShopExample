@@ -63,10 +63,11 @@ namespace UnitTests.User
             services.AddScoped(x => new UserServiceDbContext(mockOptions.Object, mockLogger.Object, options));
             var provider = services.BuildServiceProvider();
 
-            var userId = 1;
+            var userId = 2;
             var userEntity = new global::User.User.Entity.User() { Id = userId, Name = "my_name", Birthday = DateOnly.MinValue };
             var database = provider.GetRequiredService<UserServiceDbContext>();
             database.Users.Add(userEntity);
+            database.SaveChanges();
 
             var command = new UpdateUserCommand(provider, dto, userId);
             var result = command.Execute();

@@ -6,7 +6,7 @@ namespace Common.Services.Command
     public class CommandInvoker
     {
         private ICommand _mainCommand;
-        private ICommand? _integrationCommand;
+        private ICommandIntegrate? _integrationCommand;
 
         public CommandInvoker(ICommand mainCommand)
         {
@@ -14,7 +14,7 @@ namespace Common.Services.Command
             _integrationCommand = null;
         }
 
-        public CommandInvoker(ICommand mainCommand, ICommand integrationCommand)
+        public CommandInvoker(ICommand mainCommand, ICommandIntegrate integrationCommand)
         {
             _mainCommand = mainCommand;
             _integrationCommand = integrationCommand;
