@@ -9,6 +9,7 @@ namespace Basket.Basket.Controller
     using Common.Services.MessageQueue;
     using Microsoft.EntityFrameworkCore;
     using Product.Entity;
+    using Product.DTO;
     [Route("api/[controller]")]
     public class BasketController : Microsoft.AspNetCore.Mvc.Controller
     {
@@ -22,40 +23,57 @@ namespace Basket.Basket.Controller
         }
 
         [HttpGet("{id}")]
-        public IActionResult Get(int id)
+        public IActionResult GetByUserId(int id)
         {
-            var baskets = _context.Baskets.Include(x => x.Products);
-            var str = baskets.ToQueryString();
-            var res = baskets.ToList();
-            return new OkObjectResult(_context.Baskets.Find(id));
-        }
-
-        [HttpPost]
-        public IActionResult Post([FromBody] CreateBasketDTO dto)
-        {
-            var user = _context.Users.ToList();
-            var basket = new Basket.Entity.Basket
+            var basket = _context.Baskets.Include(x => x.Products).FirstOrDefault(x => x.UserId == id);
+            if (basket == null)
+                return new OkResult();
+            var dto = new ViewBasketDTO
             {
-                UserId = dto.UserId
+                Id = basket.Id,
+                Products = basket.Products.Select(x => new ViewProductDTO
+                {
+                    Name = x.Name,
+                    Count = x.Count,
+                    Price = x.Price,
+                    ImageUrl = x.ImageUrl
+                }).ToList(),
+                TotalPrice = basket.Products.Sum(x => x.Price * x.Count)
             };
-
-            _context.Baskets.Add(basket);
-            _context.SaveChanges();
-
-            return new OkObjectResult(basket.Id);
+            return new OkObjectResult(dto);
         }
 
         [HttpPut("{id}")]
         public IActionResult Update(int id, [FromBody] UpdateBasketDTO dto)
         {
-            var basket = _context.Baskets.Find(id);
-            var products = _context.Products.Where(x => dto.Products.Select(c => c.Id).Contains(x.Id)).ToList();
-            products.ForEach(x =>
+            var basket = _context.Baskets.Include(x => x.Products).FirstOrDefault(x => x.UserId == id);
+
+            if(basket == null)
             {
-                var count = dto.Products.FirstOrDefault(c => c.Id == x.Id).Count;
-                x.Count = count;
-            });
-            basket.Products = products;
+                basket = new Entity.Basket { UserId = id };
+                _context.Baskets.Add(basket);
+            }
+
+            var basketProduct = basket.Products?.FirstOrDefault(x => x.ProductId == dto.Product.Id);
+            if (basketProduct != null)
+            {
+                basketProduct.Count += dto.Product.Count;
+            }
+            else
+            {
+                var product = _context.Products.Find(dto.Product.Id);
+                basket.Products = new List<BasketProduct.Entity.BasketProduct>
+                {
+                    new BasketProduct.Entity.BasketProduct
+                    {
+                        Name = product.Name,
+                        Price = product.Price,
+                        ImageUrl = product.ImageUrl,
+                        ProductId = product.Id,
+                        Count = dto.Product.Count
+                    }
+                };
+            }
 
             _context.SaveChanges();
 
@@ -65,9 +83,9 @@ namespace Basket.Basket.Controller
         [HttpPost("{id}/order")]
         public IActionResult MakeOrder(int id)
         {
-            var basket = _context.Baskets.Include(x => x.Products).FirstOrDefault(x => x.Id == id);
+            var basket = _context.Baskets.Include(x => x.Products).FirstOrDefault(x => x.UserId == id);
 
-            foreach(var product in basket.Products)
+            foreach (var product in basket.Products)
             {
                 //Отправить запрос на сервис Catalog для проверки на уменьшение кол-ва каждого продукта
                 var response = _messageQueue.SendMessageRpc<CheckProductIntegrationMessage, bool>(
@@ -84,6 +102,9 @@ namespace Basket.Basket.Controller
                 .Select(x => new CheckProductIntegrationMessage { ProductId = x.Id, ProductCount = x.Count })
                 .ToList()
             });
+
+            _context.Baskets.Remove(basket);
+            _context.SaveChanges();
 
             return new OkObjectResult(true);
         }

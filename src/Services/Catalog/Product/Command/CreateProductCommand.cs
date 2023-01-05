@@ -23,7 +23,8 @@ namespace Catalog.Product.Command
                 Name = _dto.Name,
                 Description = _dto.Description,
                 Price = _dto.Price,
-                AvailableStock = _dto.AvailableStock
+                AvailableStock = _dto.AvailableStock,
+                ImageUrl = _dto.ImageUrl
             };
             _context.Products.Add(product);
 

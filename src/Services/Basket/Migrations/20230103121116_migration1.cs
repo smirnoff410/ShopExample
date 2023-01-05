@@ -11,6 +11,21 @@ namespace Basket.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "Products",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Products", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Users",
                 columns: table => new
                 {
@@ -46,30 +61,30 @@ namespace Basket.Migrations
                 name: "BasketProduct",
                 columns: table => new
                 {
-                    BasketsId = table.Column<int>(type: "integer", nullable: false),
-                    ProductsId = table.Column<int>(type: "integer", nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
+                        .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
+                    Name = table.Column<string>(type: "text", nullable: false),
+                    ImageUrl = table.Column<string>(type: "text", nullable: false),
+                    Count = table.Column<int>(type: "integer", nullable: false),
+                    Price = table.Column<int>(type: "integer", nullable: false),
+                    ProductId = table.Column<int>(type: "integer", nullable: false),
+                    BasketId = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_BasketProduct", x => new { x.BasketsId, x.ProductsId });
+                    table.PrimaryKey("PK_BasketProduct", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_BasketProduct_Baskets_BasketsId",
-                        column: x => x.BasketsId,
+                        name: "FK_BasketProduct_Baskets_BasketId",
+                        column: x => x.BasketId,
                         principalTable: "Baskets",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_BasketProduct_Products_ProductsId",
-                        column: x => x.ProductsId,
-                        principalTable: "Products",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_BasketProduct_ProductsId",
+                name: "IX_BasketProduct_BasketId",
                 table: "BasketProduct",
-                column: "ProductsId");
+                column: "BasketId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Baskets_UserId",
@@ -84,10 +99,10 @@ namespace Basket.Migrations
                 name: "BasketProduct");
 
             migrationBuilder.DropTable(
-                name: "Baskets");
+                name: "Products");
 
             migrationBuilder.DropTable(
-                name: "Products");
+                name: "Baskets");
 
             migrationBuilder.DropTable(
                 name: "Users");

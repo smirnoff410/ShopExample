@@ -25,6 +25,7 @@ var app = builder.Build();
 
 app.MapControllers();
 app.UseMiddleware<ValidationMiddleware>();
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 
 app.Run();
 

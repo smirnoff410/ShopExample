@@ -8,6 +8,7 @@ namespace Catalog.Product.Entity
         public string Description { get; set; }
         public int Price { get; set; }
         public int AvailableStock { get; set; }
+        public string ImageUrl { get; set; }
     }
 }
 

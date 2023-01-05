@@ -25,4 +25,14 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
   </ItemGroup>
+  <ItemGroup>
+    <None Remove="Product\DTO\" />
+    <None Remove="BasketProduct\" />
+    <None Remove="BasketProduct\Entity\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Product\DTO\" />
+    <Folder Include="BasketProduct\" />
+    <Folder Include="BasketProduct\Entity\" />
+  </ItemGroup>
 </Project>

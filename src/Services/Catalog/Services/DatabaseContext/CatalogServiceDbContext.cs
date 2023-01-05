@@ -18,7 +18,10 @@ namespace Catalog.Services.DatabaseContext
             _options = options;
             _logger = logger;
 
-            Database.EnsureCreated();
+            if (!Database.CanConnect())
+            {
+                Database.EnsureCreated();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

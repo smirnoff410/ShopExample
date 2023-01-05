@@ -32,6 +32,7 @@ messageQueue.Subscribe<ProductIntegrationMessage>("product", (scope, dto) =>
     command.Execute();
 });
 
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 // Configure the HTTP request pipeline.
 app.MapControllers();
 app.Run();

@@ -8,6 +8,7 @@ namespace Basket.Services.DatabaseContext
     using Basket.Entity;
     using User.Entity;
     using Product.Entity;
+    using BasketProduct.Entity;
     public class BasketServiceDbContext : DbContext
     {
         private readonly IOptions<DatabaseSettings> _options;
@@ -21,35 +22,31 @@ namespace Basket.Services.DatabaseContext
         {
             _options = options;
             _logger = logger;
-
-            Database.EnsureCreated();
+            if (!Database.CanConnect())
+            {
+                Database.EnsureCreated();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseNpgsql(_options.Value.ConnectionString);
+            optionsBuilder.EnableSensitiveDataLogging();
             _logger.LogInformation($"Connect to database: {_options.Value.ConnectionString}");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder
+                .Entity<BasketProduct>()
+                .HasOne(x => x.Basket)
+                .WithMany(x => x.Products);
+
+            modelBuilder
                 .Entity<Basket>()
                 .HasOne(x => x.User)
                 .WithOne()
                 .HasForeignKey<Basket>(x => x.UserId);
-
-            modelBuilder
-                .Entity<Basket>()
-                .HasMany(x => x.Products)
-                .WithMany(x => x.Baskets)
-                .UsingEntity(x => x.ToTable("BasketProduct"));
-
-            modelBuilder
-                .Entity<Product>()
-                .HasMany(x => x.Baskets)
-                .WithMany(x => x.Products)
-                .UsingEntity(x => x.ToTable("BasketProduct"));
         }
     }
 }

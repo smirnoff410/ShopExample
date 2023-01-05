@@ -24,7 +24,8 @@ namespace Catalog.Product.Command
             {
                 Id = _dto.Id,
                 Name = _dto.Name,
-                Price = _dto.Price
+                Price = _dto.Price,
+                ImageUrl = _dto.ImageUrl
             });
             return new CommandResponse();
         }

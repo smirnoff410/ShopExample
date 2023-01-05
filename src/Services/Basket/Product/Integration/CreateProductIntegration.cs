@@ -22,7 +22,8 @@ namespace Basket.Product.Integration
             {
                 Id = _message.Id,
                 Name = _message.Name,
-                Price = _message.Price
+                Price = _message.Price,
+                ImageUrl = _message.ImageUrl
             };
 
             _context.Products.Add(product);

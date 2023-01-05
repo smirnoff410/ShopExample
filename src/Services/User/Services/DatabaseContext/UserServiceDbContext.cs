@@ -20,7 +20,10 @@ namespace User.Services.DatabaseContext
             _options = settings;
             _logger = logger;
 
-            Database.EnsureCreated();
+            if (!Database.CanConnect())
+            {
+                Database.EnsureCreated();
+            }
         }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)

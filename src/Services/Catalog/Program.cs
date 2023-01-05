@@ -28,5 +28,6 @@ messageQueue.Subscribe<DecreaseAvailableCountProductMessage>("change_count_produ
     command.Execute();
 });
 
+app.UseCors(builder => builder.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod());
 app.MapControllers();
 app.Run();
