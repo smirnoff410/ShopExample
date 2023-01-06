@@ -1,6 +1,13 @@
 # ShopExample
 This repository shows simple microservices architecture
 
+## Start app
+Для разворачивания серверной части используется `docker compose`. Для старта необходимо перейти в терминале в папку src и выполнить команду `docker-compose up -d`
+
+Для разворачивания клиентской части необходим перейти в терминале в папку `frontend` и выполнить команду `npm start`
+
+Страницы приложения: https://github.com/smirnoff410/ShopExample/wiki/Pages
+
 ## Architecture
 <img width="770" src="https://user-images.githubusercontent.com/25778862/192607915-6772bbb1-4d8f-4fa3-9465-759801dcb8c6.png">
 
