@@ -1,6 +1,6 @@
 import React from 'react';
 
-const API_URL = 'http://localhost:5002/api';
+const API_URL = 'api/basket';
 
 const ProductCard = ({product}) => {
     return(
