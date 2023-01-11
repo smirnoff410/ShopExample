@@ -26,7 +26,11 @@ const ProductCard = ({product}) => {
                         alert("Select user")
                         return;
                     }
-                    await fetch(`${API_URL + '/basket/' + userId}`, requestOptions)
+                    const addToBasketResponse = await fetch(`${API_URL + '/basket/' + userId}`, requestOptions)
+                    if(addToBasketResponse.status !== 200)
+                        alert("Something was wrong")
+                    else
+                        alert("Item was add to basket")
                     console.log(product.id)} }>Add to basket</a>
                 </div>
             </div>
