@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import ProductCard from './ProductCard';
 import '../../App.css';
 
-const API_URL = 'http://localhost:5000/api/catalog';
+const API_URL = 'api/catalog';
 
 const Product = () => {
     const [products, setProducts] = useState([]);

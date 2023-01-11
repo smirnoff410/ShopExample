@@ -1,0 +1,7 @@
+FROM node:12-alpine as build
+WORKDIR /app
+COPY frontend/package.json /app/package.json
+RUN npm install --only=prod
+COPY frontend/ /app
+RUN npm run build
+CMD ["npm", "start"]

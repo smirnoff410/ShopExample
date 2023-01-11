@@ -4,7 +4,7 @@ import '../../App.css';
 import { Link } from 'react-router-dom';
 import BasketCard from './BasketCard';
 
-const API_URL = 'http://localhost:5000/api/basket';
+const API_URL = 'api/basket';
 
 const Basket = () => {
     const [basket, setBasket] = useState([]);

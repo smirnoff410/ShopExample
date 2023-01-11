@@ -3,7 +3,7 @@ import { useState, useEffect } from 'react';
 import '../../App.css';
 import UserCard from './UserCard';
 
-const API_URL = 'http://localhost:5000/api/user';
+const API_URL = 'api/user';
 
 const User = () => {
     const [users, setUsers] = useState([]);
